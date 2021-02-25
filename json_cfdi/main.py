@@ -1,7 +1,7 @@
 from fastapi import File, FastAPI, UploadFile
 from fastapi.middleware.cors import CORSMiddleware
 
-from handlers import CFDIHandler
+from json_cfdi.handlers import CFDIJson
 
 # uvicorn main:app --reload
 app = FastAPI()
@@ -29,5 +29,6 @@ async def get_supported_versions():
 
 @app.post("/cfdis/files/")
 async def read_cfdi(file: UploadFile = File(...)):
-    data = CFDIHandler.to_json(file)
+    handler = CFDIJson()
+    data = handler.to_json(file)
     return data

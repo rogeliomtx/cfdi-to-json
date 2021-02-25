@@ -2,7 +2,8 @@ import os
 
 import xmlschema
 
-from cfdi.cfdi.models import CFDI
+from json_cfdi.wrappers.cfdi.models import CFDI
+from jsonpickle.pickler import Pickler
 
 
 base_dir = os.path.dirname(__file__)
@@ -26,11 +27,17 @@ schema = xmlschema.XMLSchema(
 )
 
 
-class CFDIHandler:
-    @classmethod
-    def to_json(cls, file):
+class CFDIJson:
+    def __init__(self, use_decimal=True):
+        self.use_decimal = use_decimal
+        self.pickler = Pickler(use_decimal=self.use_decimal)
+
+    def to_json(self, file):
+        # todo: try except
+        # - format is not valid
         data = schema.to_dict(file.file)
-
         cfdi = CFDI(data)
+        return {"formated": self.to_dict(cfdi), "raw": data}
 
-        return {"formated": cfdi.to_dict(), "raw": data}
+    def to_dict(self, cfdi):
+        return self.pickler.flatten(cfdi)

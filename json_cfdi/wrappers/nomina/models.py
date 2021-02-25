@@ -1,6 +1,6 @@
 from fastapi.exceptions import HTTPException
 
-from cfdi.generics import Complex
+from json_cfdi.wrappers.generics import Complex
 
 
 class Nomina12SubContratacion:
@@ -35,6 +35,7 @@ class Nomina12Receptor:
         self.claveEntFed = attrs.get("ClaveEntFed")
 
         # todo: SubContratacion
+        self.subContratacion = "NOT IMPLEMENTED"
 
 
 class Nomina12Emisor:
@@ -46,6 +47,7 @@ class Nomina12Emisor:
         self.rfcPatronOrigen = attrs.get("RfcPatronOrigen")
 
         # todo: EntidadSNCF
+        self.entidadSNCF = "NOT IMPLEMENTED YET"
 
 
 class Nomina12Percepcion:

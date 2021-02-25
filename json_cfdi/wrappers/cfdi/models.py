@@ -1,9 +1,8 @@
 from fastapi.exceptions import HTTPException
-from jsonpickle.pickler import Pickler
 
-from cfdi.generics import Complex
-from cfdi.nomina.models import Nomina
-from cfdi.timbre_fiscal.models import TimbreFiscalDigital
+from json_cfdi.wrappers.generics import Complex
+from json_cfdi.wrappers.nomina.models import Nomina
+from json_cfdi.wrappers.timbre_fiscal.models import TimbreFiscalDigital
 
 
 class Emisor:
@@ -177,10 +176,6 @@ class CFDI(Complex):
         # todo: raw
         self.addenda = children.get("cfdi:Addenda")
         self.cfdiRelacionados = children.get("cfdi:CfdiRelacionados")
-
-    def to_dict(self):
-        p = Pickler(use_decimal=True)
-        return p.flatten(self)
 
     def check_version(self):
         if self.version not in self.supported_versions:
